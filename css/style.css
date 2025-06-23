@@ -1,0 +1,54 @@
+.menu {
+    padding: 70px 0;
+    background-color: #fff5e7; /* Cambiado del azul a un tono cálido que combine con el resto del sitio */
+}
+
+.menu .heading span {
+    color: #ff9d2d; /* Color acorde al esquema del sitio */
+}
+
+.menu .heading h2 {
+    color: #b45309; /* Color acorde al esquema del sitio */
+}
+
+.menu-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, auto));
+    grid-gap: 1.5rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.menu-container .box {
+    position: relative;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(180, 83, 9, 0.1);
+    background-color: #fff;
+}
+
+.toggle-map-btn {
+    background-color: #ff9d2d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.toggle-map-btn:hover {
+    background-color: #b45309;
+}
+
+.map-container {
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+}

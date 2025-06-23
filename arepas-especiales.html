@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Areperia El Jefe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #dbccab; /* Fondo claro */
+            font-family: 'Roboto', sans-serif;
+            color: #333; /* Texto oscuro */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Asegura que el body ocupe toda la altura de la pantalla */
+        }
+        .logo-container img {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+            margin-top: 20px;
+        }
+        .titulo-restaurante {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: rgb(78, 20, 27); /* Rojo oscuro */
+            text-align: center;
+            margin-top: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        main {
+            flex: 1; /* Empuja el footer hacia abajo */
+        }
+        .menu-section {
+            background: linear-gradient(135deg, rgb(219, 204, 171), hsl(41, 40%, 76%)); /* Degradado personalizado */
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 500px; /* Ancho máximo del formulario */
+            margin: 0 auto; /* Centrar el formulario */
+        }
+        .menu-title {
+            font-size: 1.8rem;
+            color: rgb(78, 20, 27); /* Rojo oscuro */
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .btn-custom {
+            background-color: rgb(145, 90, 96); /* Rojo oscuro */
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-custom:hover {
+            background-color: rgb(58, 15, 19); /* Rojo más oscuro */
+        }
+        footer {
+            background: linear-gradient(135deg, rgb(78, 20, 27), hsl(41, 40%, 76%)); /* Degradado rojo */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .social-icons a {
+            color: #f8f4e3; /* Texto blanco para iconos */
+            font-size: 2rem; /* Iconos más grandes */
+            margin: 0 10px;
+            transition: color 0.3s ease-in-out;
+        }
+        .social-icons a:hover {
+            color: rgb(58, 15, 19); /* Cambio de color al pasar el mouse */
+        }
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .quantity-selector input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+        }
+        .quantity-selector button {
+            background-color: rgb(145, 90, 96);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .quantity-selector button:hover {
+            background-color: rgb(58, 15, 19);
+        }
+        .menu-card {
+            background: linear-gradient(135deg, #fff, #f8f4e3);
+            border: 2px solid rgb(78, 20, 27);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .menu-card h4 {
+            font-size: 1.2rem;
+            color: rgb(78, 20, 27);
+            margin-bottom: 5px;
+        }
+        .menu-card p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .menu-card .price {
+            font-size: 1rem;
+            color: rgb(145, 90, 96);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo horizontal -->
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo Areperia El Jefe" class="img-fluid">
+    </div>
+    <!-- Título principal debajo del logo -->
+    <header class="text-center py-3">
+        <h1 class="titulo-restaurante">Areperia El Jefe</h1>
+    </header>
+    <!-- Contenido principal -->
+    <main class="container py-5">
+        <!-- Formulario de pedido -->
+        <div class="menu-section form-container">
+            <h2 class="menu-title">Haz tu Pedido</h2>
+            <form id="menu-form">
+                <!-- Selector de arepas -->
+                <div class="mb-3">
+                    <label for="arepa" class="form-label">Selecciona tu Arepa:</label>
+                    <select class="form-select" id="arepa">
+                        <option value="" disabled selected>Elige una opción</option>
+                        <!-- AREPAS SÚPER ESPECIALES -->
+                        <option value="MEXICANA AL JEFE">"MEXICANA AL JEFE" – $15.000</option>
+                        <option value="PAISA AL JEFE">"PAISA AL JEFE" – $15.000</option>
+                        <!-- AREPAS ESPECIALES -->
+                        <option value="EL JEFE">"EL JEFE" – $13.000</option>
+                        <option value="CRIOLLA">"CRIOLLA" – $12.000</option>
+                        <option value="RANCHERA">"RANCHERA" – $13.000</option>
+                        <option value="MIXTA">"MIXTA" – $11.000</option>
+                        <!-- AREPAS CLÁSICAS -->
+                        <option value="LONGANIZA Y QUESO">"LONGANIZA Y QUESO" – $8.000</option>
+                        <option value="CARNE Y QUESO">"CARNE Y QUESO" – $9.000</option>
+                        <option value="POLLO Y QUESO">"POLLO Y QUESO" – $9.000</option>
+                        <!-- AREPAS SENCILLAS -->
+                        <option value="CHICHARRÓN, MADURO Y QUESO">"CHICHARRÓN, MADURO Y QUESO" – $8.000</option>
+                        <option value="QUESO">"QUESO" – $5.500</option>
+                        <option value="CHICHARRÓN Y QUESO">"CHICHARRÓN Y QUESO" – $6.500</option>
+                        <option value="PERICOS AL JEFE">"PERICOS AL JEFE" – $8.000</option>
+                        <!-- NUEVAS RECETAS AL JEFE -->
+                        <option value="EL JEFE A LA PARRILLA">"EL JEFE A LA PARRILLA" – $18.000</option>
+                        <option value="TÓXICA AL JEFE">"TÓXICA AL JEFE" – $15.000</option>
+                        <option value="VEGETARIANA AL JEFE">"VEGETARIANA AL JEFE" – $13.000</option>
+                        <option value="CHAMPIÑONES AL JEFE">"CHAMPIÑONES AL JEFE" – $15.000</option>
+                    </select>
+                </div>
+                <!-- Cantidad de arepas -->
+                <div class="quantity-selector mb-3" id="arepa-quantity" style="display: none;">
+                    <label for="cantidad-arepa" class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad-arepa" min="1" max="20" value="1">
+                    <button type="button" class="btn btn-custom" id="add-arepa">Agregar</button>
+                </div>
+
+                <!-- ALGO MÁS -->
+                <div class="mb-3">
+                    <label for="otro" class="form-label">Algo Más:</label>
+                    <select class="form-select" id="otro">
+                        <option value="" disabled selected>Elige una opción</option>
+                        <option value="PICADA">PICADA – $17.000</option>
+                        <option value="LONGANIZA">LONGANIZA – $7.000</option>
+                        <option value="PORCIÓN DE CHICHARRÓN">PORCIÓN DE CHICHARRÓN – $5.000</option>
+                    </select>
+                </div>
+                <!-- Cantidad de algo más -->
+                <div class="quantity-selector mb-3" id="otro-quantity" style="display: none;">
+                    <label for="cantidad-otro" class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad-otro" min="1" max="20" value="1">
+                    <button type="button" class="btn btn-custom" id="add-otro">Agregar</button>
+                </div>
+
+                <!-- ADICIONALES -->
+                <div class="mb-3">
+                    <label for="adicional" class="form-label">Adicionales:</label>
+                    <select class="form-select" id="adicional">
+                        <option value="" disabled selected>Elige una opción</option>
+                        <option value="LONGANIZA ADICIONAL">LONGANIZA ADICIONAL – $2.000</option>
+                        <option value="CHICHARRÓN ADICIONAL">CHICHARRÓN ADICIONAL – $2.000</option>
+                        <option value="MADURITOS">MADURITOS – $2.000</option>
+                        <option value="JALAPEÑOS">JALAPEÑOS – $2.000</option>
+                        <option value="QUESO ADICIONAL">QUESO ADICIONAL – $2.000</option>
+                        <option value="AREPA ASADA CON MANTEQUILLA Y SAL">AREPA ASADA CON MANTEQUILLA Y SAL – $2.000</option>
+                    </select>
+                </div>
+                <!-- Cantidad de adicionales -->
+                <div class="quantity-selector mb-3" id="adicional-quantity" style="display: none;">
+                    <label for="cantidad-adicional" class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad-adicional" min="1" max="20" value="1">
+                    <button type="button" class="btn btn-custom" id="add-adicional">Agregar</button>
+                </div>
+
+                <!-- BEBIDAS FRÍAS -->
+                <div class="mb-3">
+                    <label for="bebida" class="form-label">Selecciona tu Bebida Fría:</label>
+                    <select class="form-select" id="bebida">
+                        <option value="" disabled selected>Elige una opción</option>
+                        <option value="Jugos HIT">Jugos HIT – $3.500</option>
+                        <option value="Gaseosa">Gaseosa – $4.000</option>
+                        <option value="Jugos naturales">Jugos naturales – $7.000</option>
+                        <option value="Gaseosa 1.5 L">Gaseosa 1.5 L – $8.000</option>
+                    </select>
+                </div>
+                <!-- Cantidad de bebidas -->
+                <div class="quantity-selector mb-3" id="bebida-quantity" style="display: none;">
+                    <label for="cantidad-bebida" class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad-bebida" min="1" max="20" value="1">
+                    <button type="button" class="btn btn-custom" id="add-bebida">Agregar</button>
+                </div>
+
+                <!-- Nuevos campos: Dirección, Nombre, Teléfono, Forma de Pago -->
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" placeholder="Ej: Carrera 69 #51-24" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Felipe" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono:</label>
+                    <input type="tel" class="form-control" id="telefono" placeholder="Ej: 3182198523" pattern="[0-9]*" inputmode="numeric" required>
+                </div>
+                <div class="mb-3">
+                    <label for="pago" class="form-label">Forma de Pago:</label>
+                    <select class="form-select" id="pago" required>
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia</option>
+                    </select>
+                </div>
+
+                <!-- Resumen del pedido -->
+                <div id="order-summary" class="mb-4">
+                    <h3 class="menu-title">Resumen del Pedido</h3>
+                    <ul id="summary-list" class="list-group"></ul>
+                </div>
+                <!-- Botón de envío -->
+                <button type="submit" class="btn btn-custom w-100">Hacer Pedido</button>
+            </form>
+        </div>
+
+        <!-- Menú de Arepas Súper Especiales -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Arepas Súper Especiales</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"MEXICANA AL JEFE"</h4>
+                        <p>Arepa rellena con carne, pollo, maíz tierno, longaniza ahumada, pico de gallo, frijol, guacamole, jalapeños, salsa de la casa, queso, huevo codorniz.</p>
+                        <p class="price">$15.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"PAISA AL JEFE"</h4>
+                        <p>Arepa rellena con carne, pollo, maíz tierno, huevo frito, frijol, tocineta, maduro, chicharrón, longaniza ahumada, guacamole, salsa de la casa, huevo codorniz y queso.</p>
+                        <p class="price">$15.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú de Arepas Especiales -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Arepas Especiales</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"EL JEFE"</h4>
+                        <p>Arepa rellena con carne, pollo, chicharrón, maduro, maíz tierno, longaniza ahumada, huevo codorniz y queso.</p>
+                        <p class="price">$13.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"CRIOLLA"</h4>
+                        <p>Arepa rellena con carne, pollo, maíz tierno, huevo codorniz y queso.</p>
+                        <p class="price">$12.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"RANCHERA"</h4>
+                        <p>Arepa rellena con carne, pollo, maíz tierno, longaniza ahumada, huevo codorniz y queso.</p>
+                        <p class="price">$13.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"MIXTA"</h4>
+                        <p>Arepa rellena con carne, pollo, maíz tierno, chicharrón, huevo codorniz y queso.</p>
+                        <p class="price">$11.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú de Arepas Clásicas -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Arepas Clásicas</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"LONGANIZA Y QUESO"</h4>
+                        <p>Arepas con longaniza artesanal.</p>
+                        <p class="price">$8.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"CARNE Y QUESO"</h4>
+                        <p>Arepas rellenas de carne desmechada.</p>
+                        <p class="price">$9.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"POLLO Y QUESO"</h4>
+                        <p>Arepas con pollo jugoso y queso.</p>
+                        <p class="price">$9.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú de Arepas Sencillas -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Arepas Sencillas</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"CHICHARRÓN, MADURO Y QUESO"</h4>
+                        <p>Arepa con chicharrón, maduro y queso.</p>
+                        <p class="price">$8.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"QUESO"</h4>
+                        <p>Arepa sencilla con queso.</p>
+                        <p class="price">$5.500</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"CHICHARRÓN Y QUESO"</h4>
+                        <p>Arepa con chicharrón y queso.</p>
+                        <p class="price">$6.500</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"PERICOS AL JEFE"</h4>
+                        <p>Arepa rellena con huevos pericos, maíz tierno y queso.</p>
+                        <p class="price">$8.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nuevas Recetas al Jefe -->
+        <div class="menu-section">
+            <h2 class="menu-title">🔥 Nuevas Recetas al Jefe</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"EL JEFE A LA PARRILLA"</h4>
+                        <p>Arepa rellena con res, cerdo y pollo en trozos, chimichurri de la casa, salsa de la casa, pico de gallo y queso.</p>
+                        <p class="price">$18.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"TÓXICA AL JEFE"</h4>
+                        <p>Arepa rellena con carne molida, aguacate en tiras, fríjol, huevo frito, queso y salsa de la casa.</p>
+                        <p class="price">$15.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"VEGETARIANA AL JEFE"</h4>
+                        <p>Arepa rellena con champiñones salteados con salsa de la casa, maíz tierno, pico de gallo, guacamole y queso.</p>
+                        <p class="price">$13.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>"CHAMPIÑONES AL JEFE"</h4>
+                        <p>Arepa rellena con pollo, champiñones salteados con mantequilla y salsa de la casa, tocineta, chimichurri, jamón y queso.</p>
+                        <p class="price">$15.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Algo Más -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Algo Más</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>PICADA</h4>
+                        <p>Carne, pollo, chicharrón, maduro, maíz tierno, longaniza ahumada, papa ripio, huevo codorniz, arepa picada y queso.</p>
+                        <p class="price">$17.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>LONGANIZA</h4>
+                        <p>Porción de longaniza artesanal.</p>
+                        <p class="price">$7.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>PORCIÓN DE CHICHARRÓN</h4>
+                        <p>Porción de chicharrón crujiente.</p>
+                        <p class="price">$5.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adicionales -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Adicionales (por porción)</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>LONGANIZA ADICIONAL</h4>
+                        <p class="price">$2.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>CHICHARRÓN ADICIONAL</h4>
+                        <p class="price">$2.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>MADURITOS</h4>
+                        <p class="price">$2.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>JALAPEÑOS</h4>
+                        <p class="price">$2.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>QUESO ADICIONAL</h4>
+                        <p class="price">$2.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>AREPA ASADA CON MANTEQUILLA Y SAL</h4>
+                        <p class="price">$2.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú de Bebidas Frías -->
+        <div class="menu-section">
+            <h2 class="menu-title">🟡 Bebidas Frías</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>Jugos HIT</h4>
+                        <p class="price">$3.500</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>Gaseosa</h4>
+                        <p class="price">$4.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>Jugos naturales</h4>
+                        <p class="price">$7.000</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="menu-card">
+                        <h4>Gaseosa 1.5 L</h4>
+                        <p class="price">$8.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="text-center py-3">
+            <p>© 2025 Areperia El Jefe. Todos los derechos reservados.</p>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/arepas.eljefe/" class="me-3"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@arepas.eljefe"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS (opcional) -->
+    <script>
+        const orderSummary = [];
+        const summaryList = document.getElementById('summary-list');
+
+        // Mostrar cantidad para arepas
+        document.getElementById('arepa').addEventListener('change', function () {
+            const arepaQuantity = document.getElementById('arepa-quantity');
+            if (this.value) {
+                arepaQuantity.style.display = 'flex';
+            } else {
+                arepaQuantity.style.display = 'none';
+            }
+        });
+
+        // Agregar arepa al pedido
+        document.getElementById('add-arepa').addEventListener('click', function () {
+            const arepaSelect = document.getElementById('arepa');
+            const cantidadInput = document.getElementById('cantidad-arepa');
+            const arepa = arepaSelect.value;
+            const cantidad = parseInt(cantidadInput.value);
+
+            if (!arepa || cantidad < 1 || cantidad > 20) {
+                alert("Por favor, selecciona una arepa y una cantidad válida (1-20).");
+                return;
+            }
+
+            // Agregar al resumen del pedido
+            const existingItem = orderSummary.find(item => item.name === arepa);
+            if (existingItem) {
+                existingItem.quantity += cantidad;
+            } else {
+                orderSummary.push({ name: arepa, quantity: cantidad });
+            }
+            updateOrderSummary();
+
+            // Limpiar campos
+            arepaSelect.value = '';
+            cantidadInput.value = 1;
+            document.getElementById('arepa-quantity').style.display = 'none';
+        });
+
+        // Mostrar cantidad para algo más
+        document.getElementById('otro').addEventListener('change', function () {
+            const otroQuantity = document.getElementById('otro-quantity');
+            if (this.value) {
+                otroQuantity.style.display = 'flex';
+            } else {
+                otroQuantity.style.display = 'none';
+            }
+        });
+
+        // Agregar algo más al pedido
+        document.getElementById('add-otro').addEventListener('click', function () {
+            const otroSelect = document.getElementById('otro');
+            const cantidadInput = document.getElementById('cantidad-otro');
+            const otro = otroSelect.value;
+            const cantidad = parseInt(cantidadInput.value);
+
+            if (!otro || cantidad < 1 || cantidad > 20) {
+                alert("Por favor, selecciona un ítem y una cantidad válida (1-20).");
+                return;
+            }
+
+            // Agregar al resumen del pedido
+            const existingItem = orderSummary.find(item => item.name === otro);
+            if (existingItem) {
+                existingItem.quantity += cantidad;
+            } else {
+                orderSummary.push({ name: otro, quantity: cantidad });
+            }
+            updateOrderSummary();
+
+            // Limpiar campos
+            otroSelect.value = '';
+            cantidadInput.value = 1;
+            document.getElementById('otro-quantity').style.display = 'none';
+        });
+
+        // Mostrar cantidad para adicionales
+        document.getElementById('adicional').addEventListener('change', function () {
+            const adicionalQuantity = document.getElementById('adicional-quantity');
+            if (this.value) {
+                adicionalQuantity.style.display = 'flex';
+            } else {
+                adicionalQuantity.style.display = 'none';
+            }
+        });
+
+        // Agregar adicional al pedido
+        document.getElementById('add-adicional').addEventListener('click', function () {
+            const adicionalSelect = document.getElementById('adicional');
+            const cantidadInput = document.getElementById('cantidad-adicional');
+            const adicional = adicionalSelect.value;
+            const cantidad = parseInt(cantidadInput.value);
+
+            if (!adicional || cantidad < 1 || cantidad > 20) {
+                alert("Por favor, selecciona un adicional y una cantidad válida (1-20).");
+                return;
+            }
+
+            // Agregar al resumen del pedido
+            const existingItem = orderSummary.find(item => item.name === adicional);
+            if (existingItem) {
+                existingItem.quantity += cantidad;
+            } else {
+                orderSummary.push({ name: adicional, quantity: cantidad });
+            }
+            updateOrderSummary();
+
+            // Limpiar campos
+            adicionalSelect.value = '';
+            cantidadInput.value = 1;
+            document.getElementById('adicional-quantity').style.display = 'none';
+        });
+
+        // Mostrar cantidad para bebidas
+        document.getElementById('bebida').addEventListener('change', function () {
+            const bebidaQuantity = document.getElementById('bebida-quantity');
+            if (this.value) {
+                bebidaQuantity.style.display = 'flex';
+            } else {
+                bebidaQuantity.style.display = 'none';
+            }
+        });
+
+        // Agregar bebida al pedido
+        document.getElementById('add-bebida').addEventListener('click', function () {
+            const bebidaSelect = document.getElementById('bebida');
+            const cantidadInput = document.getElementById('cantidad-bebida');
+            const bebida = bebidaSelect.value;
+            const cantidad = parseInt(cantidadInput.value);
+
+            if (!bebida || cantidad < 1 || cantidad > 20) {
+                alert("Por favor, selecciona una bebida y una cantidad válida (1-20).");
+                return;
+            }
+
+            // Agregar al resumen del pedido
+            const existingItem = orderSummary.find(item => item.name === bebida);
+            if (existingItem) {
+                existingItem.quantity += cantidad;
+            } else {
+                orderSummary.push({ name: bebida, quantity: cantidad });
+            }
+            updateOrderSummary();
+
+            // Limpiar campos
+            bebidaSelect.value = '';
+            cantidadInput.value = 1;
+            document.getElementById('bebida-quantity').style.display = 'none';
+        });
+
+        // Actualizar el resumen del pedido
+        function updateOrderSummary() {
+            summaryList.innerHTML = ''; // Limpiar lista
+            orderSummary.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.innerHTML = `
+                    ${item.name} x${item.quantity}
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(${index})">Eliminar</button>
+                `;
+                summaryList.appendChild(listItem);
+            });
+        }
+
+        // Eliminar un ítem del pedido
+        function removeItem(index) {
+            orderSummary.splice(index, 1);
+            updateOrderSummary();
+        }
+
+        // Restringir el campo de teléfono a solo números
+        document.getElementById('telefono').addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, ''); // Elimina cualquier carácter que no sea número
+        });
+
+        // Enviar el pedido por WhatsApp
+        document.getElementById('menu-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evitar que el formulario se envíe
+            if (orderSummary.length === 0) {
+                alert("Por favor, agrega al menos un ítem al pedido.");
+                return;
+            }
+
+            // Obtener valores de los nuevos campos
+            const direccion = document.getElementById('direccion').value;
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const pago = document.getElementById('pago').value;
+
+            if (!direccion || !nombre || !telefono || !pago) {
+                alert("Por favor, completa todos los campos: dirección, nombre, teléfono y forma de pago.");
+                return;
+            }
+
+            // Crear el mensaje de WhatsApp
+            let mensaje = `¡Hola! Quiero hacer un pedido:\n\n`;
+            orderSummary.forEach(item => {
+                mensaje += `- ${item.name} x${item.quantity}\n`;
+            });
+            mensaje += `\nDirección: ${direccion}\n`;
+            mensaje += `Nombre: ${nombre}\n`;
+            mensaje += `Teléfono: ${telefono}\n`;
+            mensaje += `Forma de Pago: ${pago}`;
+
+            // Número de WhatsApp
+            const numeroWhatsApp = '+573182198523';
+            // Crear y abrir el enlace de WhatsApp
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            window.open(urlWhatsApp, '_blank');
+        });
+    </script>
+</body>
+</html>
